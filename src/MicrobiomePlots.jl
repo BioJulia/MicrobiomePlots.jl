@@ -1,11 +1,14 @@
 module MicrobiomePlots
 
 using Microbiome
-using PlotRecipes
+using RecipesBase
 using StatPlots
 
 export
     abundanceplot,
     annotationbar,
-
     zeroyplot
+
+include("recipes.jl")
+
+end
