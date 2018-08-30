@@ -2,12 +2,14 @@ module MicrobiomePlots
 
 using Microbiome
 using RecipesBase
-using StatPlots
+using Colors
+import StatPlots: GroupedBar
 
 export
     abundanceplot,
-    annotationbar,
-    zeroyplot
+    AnnotationBar,
+    annotationbar
+    # zeroyplot
 
 include("recipes.jl")
 
