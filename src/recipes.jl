@@ -19,6 +19,7 @@ end
 
     rows = featurenames(top)
 
+    yflip := true
     bar_position := :stack
     label := rows
     GroupedBar((1:nsamples(top), Matrix(occurrences(top)[:,sort]')))
@@ -50,6 +51,8 @@ annotationbar(colors::Array{<:Color,1}) = AnnotationBar(["sample$i" for i in 1:l
     color --> :black
     ticks := false
     framestyle := false
+    xaxis --> false
+    yaxis --> false
     xs, ys
 end
 
