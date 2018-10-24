@@ -5,7 +5,7 @@ makedocs(
     sitename = "MicrobiomePlots.jl",
     pages = [
         "Home" => "index.md",
-        "Recipes" => "recipes.md"
+        "Recipes" => "recipes.md",
         "Contributing" => "contributing.md"
     ],
     authors = "Kevin Bonham, PhD"
