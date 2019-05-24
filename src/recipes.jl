@@ -1,14 +1,5 @@
-@recipe function f(pc::PCoA)
-    xticks := false
-    yticks := false
-    xlabel --> "PCo1 ($(round(variance(pc, 1) * 100, digits = 2))%)"
-    ylabel --> "PCo2 ($(round(variance(pc, 2) * 100, digits = 2))%)"
-    seriestype := :scatter
-    principalcoord(pc, 1), principalcoord(pc,2)
-end
-
 @userplot AbundancePlot
-@recipe function f(plt::AbundancePlot; topabund=10, sort::Vector{Int}=collect(1:nsites(plt.args[1])))
+@recipe function f(plt::AbundancePlot; topabund=10, srt=collect(1:nsites(plt.args[1])))
     abun = plt.args[1]
     typeof(abun) <: AbstractComMatrix || error("AbundancePlot not defined for $(typeof(abun))")
 
@@ -22,7 +13,7 @@ end
     yflip := true
     bar_position := :stack
     label := rows
-    GroupedBar((1:nsamples(top), Matrix(occurrences(top)[:,sort]')))
+    GroupedBar((1:nsamples(top), Matrix(occurrences(top)[:,srt]')))
 end
 
 struct AnnotationBar
