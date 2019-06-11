@@ -3,7 +3,7 @@ uuid = "bed85cf4-5cc8-5ac4-9eb3-09fbf92b2ce2"
 keywords = ["microbiology", "microbiome", "biology"]
 license = "MIT"
 desc = "Plotting functions for the microbiome"
-authors = ["kescobo <kevbonham@gmail.com"]
+authors = ["kescobo <kevbonham@gmail.com>"]
 version = "0.0.1"
 
 [deps]
@@ -14,6 +14,7 @@ StatPlots = "60ddc479-9b66-56df-82fc-76a74619b69c"
 
 [compat]
 julia = "0.7, 1.0"
+Microbiome = "0.3, 0.4"
 
 [extras]
 Coverage = "a2441757-f6aa-5fb2-8edb-039e3f45d037"
@@ -24,5 +25,3 @@ Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 [targets]
 coverage = ["Coverage"]
 test = ["Test", "Plots", "Random"]
-
-Microbiome = "0.3, 0.4"
