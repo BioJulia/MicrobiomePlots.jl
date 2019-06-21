@@ -13,7 +13,7 @@ RecipesBase = "3cdcf5f2-1ef4-517c-9805-6587b60abb01"
 StatPlots = "60ddc479-9b66-56df-82fc-76a74619b69c"
 
 [compat]
-Microbiome = "0.3, 0.4, 0.5"
+Microbiome = "0.4, 0.5"
 julia = "0.7, 1.0, 1.1, 1.2"
 
 [extras]
