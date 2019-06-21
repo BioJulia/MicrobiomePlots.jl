@@ -1,5 +1,5 @@
 [deps]
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
-
-[compat]
-Documenter = "~0.19"
+Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+MicrobiomePlots = "bed85cf4-5cc8-5ac4-9eb3-09fbf92b2ce2"
+Microbiome = "3bd8f0ae-a0f2-5238-a5af-e1b399a4940c"
