@@ -16,13 +16,59 @@
     GroupedBar((1:nsamples(top), Matrix(occurrences(top)[:,srt]')))
 end
 
+"""
+    AnnotationBar(::Array{<:Color,1})
+
+Array of colors for plotting a grid. Use `plot(::AnnotationBar; kwargs...)`
+"""
 struct AnnotationBar
-    labels::Array{<:AbstractString,1}
     colors::Array{<:Color,1}
 end
 
-annotationbar(labels::Array{<:AbstractString,1}, colors::Array{<:Color,1}) = AnnotationBar(labels, colors)
-annotationbar(colors::Array{<:Color,1}) = AnnotationBar(["sample$i" for i in 1:length(colors)], colors)
+"""
+    annotationbar(colors::AbstractArray{<:Color,1})
+    annotationbar(labels::AbstractArray{<:AbstractString,1})
+    annotationbar(labels::AbstractArray{<:AbstractString,1}, colormap::Dict{<:AbstractString,<:Color})
+    annotationbar(labels::AbstractArray{<:AbstractString,1}, colors::AbstractArray{<:Color,1})
+
+Create an `AnnotationBar` from a vector of colors or a vector of `labels` (`String`s).
+- A vector of `Color`s will be used directly to create an `AnnotationBar`
+- For an array of `String`s, each unique value will be assigned a random color from
+  `Colors.color_names`.
+- A vector of labels may be passed with a `Dict` with keys for each `label` mapping
+  to a `Color` value.
+- A vector of `labels` and `colors` may be used.
+    - If the lengths of these vectors are the same,
+      the `colors` will be used to create an AnnotationBar
+    - If the length of `labels` is longer than the length of `colors`,
+      each unique label will be assigned to one of the `colors`
+"""
+annotationbar(colors::AbstractArray{<:Color,1}) = AnnotationBar(colors)
+
+function annotationbar(labels::AbstractArray{<:AbstractString,1}, colormap::Dict{<:AbstractString,<:Color})
+    colorkeys = keys(colormap)
+    all(label-> in(label, colorkeys), labels) || throw(ArgumentError("Colormap missing keys $(setdiff(labels, colorkeys))"))
+    AnnotationBar([colormap[label] for label in labels])
+end
+
+
+function annotationbar(labels::AbstractArray{<:AbstractString,1}, colors::AbstractArray{<:Color,1})
+    if length(labels) == length(colors)
+        return annotationbar(colors)
+    end
+    ulabels = unique(labels)
+    length(colors) < length(ulabels) && throw(ArgumentError("Must have at least 1 color for each unique label"))
+    colormap = Dict(l => colors[i] for (i, l) in enumerate(ulabels))
+    annotationbar(labels, colormap)
+end
+
+# if no colors are passed, give a unique random color to each label
+function annotationbar(labels::AbstractArray{<:AbstractString,1})
+    ulabels = unique(labels)
+    colors = rand(keys(Colors.color_names), length(ulabels))
+    colormap = Dict(l => parse(Colorant, colors[i]) for (i, l) in enumerate(ulabels))
+    annotationbar(labels, colormap)
+end
 
 @recipe function f(bar::AnnotationBar)
     xs = Int[]
