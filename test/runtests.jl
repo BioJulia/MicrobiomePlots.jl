@@ -7,7 +7,7 @@ using Random
 using Test
 
 @testset "Abundances" begin
-Random.seed!(1)
+    Random.seed!(1)
     M = rand(100, 10)
 
     abund = abundancetable(
