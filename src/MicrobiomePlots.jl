@@ -3,7 +3,8 @@ module MicrobiomePlots
 using Microbiome
 using RecipesBase
 using Colors
-import StatsPlots: GroupedBar
+using Reexport
+@reexport using StatsPlots
 
 export
     abundanceplot,

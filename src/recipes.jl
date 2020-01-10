@@ -13,7 +13,7 @@
     yflip := true
     bar_position := :stack
     label := rows
-    GroupedBar((1:nsamples(top), Matrix(occurrences(top)[:,srt]')))
+    StatsPlots.GroupedBar((1:nsamples(top), Matrix(occurrences(top)[:,srt]')))
 end
 
 """

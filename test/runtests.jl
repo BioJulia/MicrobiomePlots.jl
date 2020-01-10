@@ -1,7 +1,5 @@
 using Microbiome
 using MicrobiomePlots
-using StatsPlots
-using Plots
 using Colors
 using Random
 using Test

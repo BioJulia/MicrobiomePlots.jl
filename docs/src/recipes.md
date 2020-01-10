@@ -1,19 +1,14 @@
 # Recipes Docs
 
-```@autodocs
-Modules = [MicrobiomePlots]
-Private = false
-```
-
 ## Abundances
 
 Some convenience plotting types are available using
-[MicrobiomePlots](https://github.com/BioJulia/MicrobiomePlots.jl)
-and [StatsPlots](https://github.com/juliaplots/StatsPlots.jl)
+[MicrobiomePlots](https://github.com/BioJulia/MicrobiomePlots.jl),
+Which also re-exports everything in [StatsPlots](https://github.com/juliaplots/StatsPlots.jl)
 
 ```@example 1
 ENV["GKSwstype"] = "100" # hide
-using StatsPlots
+using Microbiome
 using MicrobiomePlots
 using Distributions
 using Random # hide
@@ -37,11 +32,7 @@ abund = abundancetable(bugs,
 
 relativeabundance!(abund)
 abundanceplot(abund, xticks=(1:10, samplenames(abund)), xrotation=45)
-
-savefig("abundanceplot.png"); nothing # hide
 ```
-
-![abundance plot](./abundanceplot.png)
 
 ## Metadata
 
@@ -54,69 +45,79 @@ plot(
     abundanceplot(abund, xticks=(1:10, samplenames(abund)), xrotation=45),
     plot(annotationbar(labels)),
     layout=grid(2,1, heights=[0.9,0.1]))
-
-savefig("abundanceplot-annotations.png"); nothing # hide
 ```
-
-![abundance plot with annotations](./abundanceplot-annotations.png)
 
 ## Distances
 
 To plot this, use the `MDS` or `PCA` implementations
-from [MultivariateStats](https://github.com/JuliaStats/MultivariateStats.jl) [^1]
+from [MultivariateStats](https://github.com/JuliaStats/MultivariateStats.jl)
 and plotting functionality
-from [StatsPlots](https://github.com/JuliaPlots/StatsPlots.jl)[^2].
+from [StatsPlots](https://github.com/JuliaPlots/StatsPlots.jl).
 
-```@example 2
+```@example 1
 using MultivariateStats
-using StatsPlots
+using Distances
+
+# Note - one [SpatialEcology #36](https://github.com/EcoJulia/SpatialEcology.jl/pull/36)
+# is released, one will be able to do `pairwise(BrayCurtis(), abund)` directly
+dm = pairwise(BrayCurtis(), occurrences(abund))
 
 mds = fit(MDS, dm, distances=true)
 
 plot(mds)
-
-savefig("mds.png"); nothing # hide
 ```
-
-![mds plot](./mds.png)
 
 ### Optimal Leaf Ordering
 
 I also wrote a plotting recipe for making treeplots for `Hclust` objects
 from the [`Clustering.jl`](http://github.com/JuliaStats/Clustering.jl) package,
-and the recipe for plotting was moved into StatsPlots:
+and the recipe for plotting
+was [moved into](https://github.com/JuliaPlots/StatsPlots.jl#dendrograms) StatsPlots:
 
 ```@example 2
 using Clustering
+using Distances
+using MicrobiomePlots
+using Random
 
-dm = [0. .1 .2
-      .1 0. .15
-      .2 .15 0.];
+n = 40
 
-h = hclust(dm, linkage=:single);
+mat = zeros(Int, n, n)
+# create banded matrix
+for i in 1:n
+    last = minimum([i+Int(floor(n/5)), n])
+    for j in i:last
+        mat[i,j] = 1
+    end
+end
 
-plot(h)
-savefig("hclustplot1.png"); nothing # hide
+# randomize order
+mat = mat[:, randperm(n)]
+dm = pairwise(Euclidean(), mat, dims=2)
+
+# normal ordering
+hcl1 = hclust(dm, linkage=:average)
+plot(
+    plot(hcl1, xticks=false),
+    heatmap(mat[:, hcl1.order], colorbar=false, xticks=(1:n, ["$i" for i in hcl1.order])),
+    layout=grid(2,1, heights=[0.2,0.8])
+    )
 ```
 
-![hclust plot 1](./hclustplot1.png)
-
-Note that even though this is a valid tree, the leaf `a` is closer to leaf `c`,
-despite the fact that `c` is more similar to `b` than to `a`. This can be fixed
-with a method derived from the paper:
-
-[Bar-Joseph et. al. "Fast optimal leaf ordering for hierarchical clustering." _Bioinformatics_. (2001)](https://doi.org/10.1093/bioinformatics/17.suppl_1.S22)[^3]
+Compare to:
 
 ```@example 2
-h2 = hclust(dm, linkage=:single, branchorder=:optimal);
-
-plot(h2)
-
-savefig("hclustplot2.png"); nothing # hide
+# optimal ordering
+hcl2 = hclust(dm, linkage=:average, branchorder=:optimal)
+plot(
+    plot(hcl2, xticks=false),
+    heatmap(mat[:, hcl2.order], colorbar=false, xticks=(1:n, ["$i" for i in hcl2.order])),
+    layout=grid(2,1, heights=[0.2,0.8])
+    )
 ```
 
-![hclust plot 1](./hclustplot2.png)
 
-[^1]: Requires https://github.com/JuliaStats/MultivariateStats.jl/pull/85
-[^2]: Requires https://github.com/JuliaPlots/StatsPlots.jl/pull/152
-[^3]: Requires https://github.com/JuliaStats/Clustering.jl/pull/170
+```@autodocs
+Modules = [MicrobiomePlots]
+Private = false
+```
