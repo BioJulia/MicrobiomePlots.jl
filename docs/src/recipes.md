@@ -32,7 +32,11 @@ abund = abundancetable(bugs,
 
 relativeabundance!(abund)
 abundanceplot(abund, xticks=(1:10, samplenames(abund)), xrotation=45)
+
+savefig("abund1.png") # hide
 ```
+
+!["first abundance plot"](abund1.png)
 
 ## Metadata
 
@@ -45,7 +49,11 @@ plot(
     abundanceplot(abund, xticks=(1:10, samplenames(abund)), xrotation=45),
     plot(annotationbar(labels)),
     layout=grid(2,1, heights=[0.9,0.1]))
+
+savefig("abund2.png") # hide
 ```
+
+!["annotated abundance plot"](abund2.png)
 
 ## Distances
 
@@ -58,7 +66,7 @@ from [StatsPlots](https://github.com/JuliaPlots/StatsPlots.jl).
 using MultivariateStats
 using Distances
 
-# Note - one [SpatialEcology #36](https://github.com/EcoJulia/SpatialEcology.jl/pull/36)
+# Note - once [SpatialEcology #36](https://github.com/EcoJulia/SpatialEcology.jl/pull/36)
 # is released, one will be able to do `pairwise(BrayCurtis(), abund)` directly
 dm = pairwise(BrayCurtis(), occurrences(abund))
 

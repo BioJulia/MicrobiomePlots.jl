@@ -4,6 +4,7 @@ using Microbiome
 using RecipesBase
 using Colors
 using Reexport
+using Random
 @reexport using StatsPlots
 
 export
