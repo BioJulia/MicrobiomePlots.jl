@@ -1,13 +1,11 @@
 using Microbiome
 using MicrobiomePlots
-using StatsPlots
-using Plots
 using Colors
 using Random
 using Test
 
 @testset "Abundances" begin
-Random.seed!(1)
+    Random.seed!(1)
     M = rand(100, 10)
 
     abund = abundancetable(

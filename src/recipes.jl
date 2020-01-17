@@ -13,7 +13,7 @@
     yflip := true
     bar_position := :stack
     label := rows
-    GroupedBar((1:nsamples(top), Matrix(occurrences(top)[:,srt]')))
+    StatsPlots.GroupedBar((1:nsamples(top), Matrix(occurrences(top)[:,srt]')))
 end
 
 """
@@ -65,7 +65,8 @@ end
 # if no colors are passed, give a unique random color to each label
 function annotationbar(labels::AbstractArray{<:AbstractString,1})
     ulabels = unique(labels)
-    colors = rand(keys(Colors.color_names), length(ulabels))
+    cnames = collect(keys(Colors.color_names))
+    colors = cnames[randperm(length(cnames))[1:length(ulabels)]]
     colormap = Dict(l => parse(Colorant, colors[i]) for (i, l) in enumerate(ulabels))
     annotationbar(labels, colormap)
 end
