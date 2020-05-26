@@ -11,7 +11,7 @@
 
 **Development Status**
 
-[![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![Project Status: Abandoned – Initial development has started, but there has not yet been a stable, usable release; the project has been abandoned and the author(s) do not intend on continuing development.](https://img.shields.io/badge/repo%20status-abandoned-red?style=for-the-badge)](https://www.repostatus.org/#abandoned)
 [![Build Status](https://travis-ci.org/BioJulia/MicrobiomePlots.jl.svg?branch=master)](https://travis-ci.org/BioJulia/MicrobiomePlots.jl)
 [![](https://img.shields.io/badge/docs-latest-blue.svg)](https://biojulia.github.io/MicrobiomePlots.jl/latest)
 
@@ -19,6 +19,8 @@
 
 MicrobiomePlots.jl is a companion package for [Microbiome.jl](https://github.com/BioJulia/Microbiome.jl)
 for plotting microbiome and microbial community data.
+Functionality will be ported to Microbiome.jl soon. 
+**This package is Deprecated**
 
 ## Installation
 
