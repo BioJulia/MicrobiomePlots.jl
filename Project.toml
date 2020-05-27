@@ -4,7 +4,7 @@ keywords = ["microbiology", "microbiome", "biology"]
 license = "MIT"
 desc = "Plotting functions for the microbiome"
 authors = ["kescobo <kevbonham@gmail.com>"]
-version = "0.2.0"
+version = "0.2.1"
 
 [deps]
 Colors = "5ae59095-9a9b-59fe-a467-6f913c188581"
@@ -15,11 +15,12 @@ Reexport = "189a3867-3050-52da-a836-e630ba90ab69"
 StatsPlots = "f3b207a7-027a-5e70-b257-86293d7955fd"
 
 [compat]
-Colors = "0.9, 0.11"
+Colors = "0.9, 0.11, 0.12"
 Microbiome = "0.5, 0.6"
+Reexport = "0.2"
+StatsPlots = "0.13, 0.14"
+julia = "1.1"
 RecipesBase = "0.7, 0.8, 1.0"
-StatsPlots = "0.13"
-julia = "1.1, 1.2, 1.3"
 
 [extras]
 Coverage = "a2441757-f6aa-5fb2-8edb-039e3f45d037"
